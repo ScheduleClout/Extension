@@ -1,0 +1,48 @@
+.feed-create-post__schedule-wrap {
+	position: relative;
+
+	.fa-clock {
+		display: block;
+		line-height: 1;
+	}
+
+	.feed-create-post__schedule-input {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 0;
+		border: none;
+		display: block;
+		position: absolute;
+
+		//noinspection CssInvalidPseudoSelector
+		&::-webkit-datetime-edit {
+			opacity: 0;
+		}
+
+		&::-webkit-calendar-picker-indicator {
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: 0;
+			padding: 0;
+			opacity: 0;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+			position: absolute;
+		}
+	}
+}
+
+.feed-create-post__message {
+	&[data-error="true"] {
+		color: #d32f2f;
+	}
+
+	a {
+		color: #0059f7 !important;
+	}
+}

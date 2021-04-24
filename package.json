@@ -1,0 +1,24 @@
+{
+	"name": "scheduleclout",
+	"version": "0.0.1",
+	"description": "An open-source BitClout Scheduler for Chromium-based browsers",
+	"private": true,
+	"scripts": {
+		"build": "npx webpack --config webpack.config.js --mode production"
+	},
+	"author": "Farsad",
+	"license": "GPL",
+	"dependencies": {
+		"jquery": "^3.6.0",
+		"moment": "^2.29.1"
+	},
+	"devDependencies": {
+		"copy-webpack-plugin": "^8.1.1",
+		"css-loader": "^5.2.4",
+		"sass": "^1.32.11",
+		"sass-loader": "^11.0.1",
+		"style-loader": "^2.0.0",
+		"webpack": "^5.35.0",
+		"webpack-cli": "^4.6.0"
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"extName": {
+		"message": "Schedule Clout",
+		"description": "Extension name."
+	},
+	"extDescription": {
+		"message": "A extension that let's you schedule your statuses on BitClout",
+		"description": "Extension description."
+	},
+	"invalidDatetime": {
+		"message": "You cannot schedule in the past!",
+		"description": "Invalid datetime."
+	},
+	"publish": {
+		"message": "Will be published %MESSAGE% - <a data-action='cancel'>Cancel</a>",
+		"description": "Publish in message."
+	},
+	"scheduleButton": {
+		"message": "Schedule",
+		"description": "Schedule button label."
+	},
+	"scheduledPosts": {
+		"message": "Scheduled Posts",
+		"description": "Scheduled posts tab heading."
+	},
+	"cancel": {
+		"message": "Cancel",
+		"description": "Cancel option label."
+	},
+	"postCaption": {
+		"message": "Will be published %MESSAGE%",
+		"description": "Scheduled post caption."
+	},
+	"noContent": {
+		"message": "There is nothing to show here!",
+		"description": "No content."
+	}
+}
