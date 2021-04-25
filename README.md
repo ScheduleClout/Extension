@@ -19,6 +19,11 @@ Currently, you can install the extension manually by following the **Build Guide
     ```shell script
     npm install
     ```
+1. Copy `.env.example` to `.env` and change the values if required.
+    ```dotenv
+   NODE_HOSTNAME=bitclout.com # Your Node's hostname (without protocol)
+   NODE_API_HOSTNAME=api.bitclout.com # Your Node's API url (without protocol)
+    ```
 1. Build the project by running either of the following commands:
     ```shell script
    npm run build
