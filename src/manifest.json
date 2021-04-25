@@ -10,8 +10,8 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"https://www.bitclout.com/*",
-				"https://bitclout.com/*"
+				"https://www.${NODE_HOSTNAME}/*",
+				"https://${NODE_HOSTNAME}/*"
 			],
 			"js": [
 				"index.bundle.js"
@@ -19,9 +19,9 @@
 		}
 	],
 	"host_permissions": [
-		"https://bitclout.com/*",
-		"https://www.bitclout.com/*",
-		"https://api.bitclout.com/*",
+		"https://${NODE_HOSTNAME}/*",
+		"https://www.${NODE_HOSTNAME}/*",
+		"https://${NODE_API_HOSTNAME}/*",
 		"https://identity.bitclout.com/*"
 	],
 	"permissions": [

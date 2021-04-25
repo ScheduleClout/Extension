@@ -30,7 +30,7 @@ const waitForTabByUrl = async (window, url) => {
         }, Constants.INTERVAL.TIMEOUT);
     }),
     createWindow = () => new Promise(resolve => {
-        let url = 'https://www.bitclout.com/';
+        let url = `https://www.${process.env.NODE_HOSTNAME}/`;
 
         chrome.windows.create({
             url,
@@ -45,7 +45,7 @@ const waitForTabByUrl = async (window, url) => {
 export const BitClout = {
     target: undefined,
     async SubmitPost(post) {
-        let response = await fetch('https://api.bitclout.com/submit-post', {
+        let response = await fetch(`https://${process.env.NODE_API_HOSTNAME}/submit-post`, {
                 method: 'POST',
                 headers: new Headers({
                     'content-type': 'application/json'
@@ -100,7 +100,7 @@ export const BitClout = {
         return signedTransactionHex;
     },
     async SubmitTransaction(encryptedSeedHex, transactionHex) {
-        await fetch('https://api.bitclout.com/submit-transaction', {
+        await fetch(`https://${process.env.NODE_API_HOSTNAME}/submit-transaction`, {
             method: 'POST',
             headers: new Headers({
                 'content-type': 'application/json'
