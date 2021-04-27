@@ -4,12 +4,10 @@ import {Constants} from "../constants/Constants";
 import {Utils} from "../constants/Utils";
 
 export const initializeScheduler = async () => {
-    const $feed = await Utils.waitForElement(Constants.SELECTORS.FEED._);
+    const $feed = await Utils.forElement(Constants.SELECTORS.FEED._);
 
-    if ($feed.hasClass('initialized') || $feed.hasClass('processing'))
+    if ($feed.hasClass('initialized'))
         return;
-
-    $feed.addClass('processing');
 
     const $createPost = $feed.find(Constants.SELECTORS.FEED.CREATE_POST._),
         $textarea = $createPost.find(Constants.SELECTORS.FEED.CREATE_POST.TEXTAREA);
@@ -137,6 +135,5 @@ export const initializeScheduler = async () => {
 
     $createPost.on('click', 'a[data-action="cancel"]', () => setDatetimeValue(undefined));
 
-    $feed.removeClass('processing');
     $feed.addClass('initialized');
 };

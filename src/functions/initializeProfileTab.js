@@ -6,15 +6,13 @@ import {TabManager} from "../constants/TabManager";
 import {Scheduler} from "../constants/Scheduler";
 
 export const initializeProfileTab = async () => {
-    const $profile = await Utils.waitForElement(Constants.SELECTORS.PROFILE._);
+    const $profile = await Utils.forElement(Constants.SELECTORS.PROFILE._);
 
-    if ($profile.hasClass('initialized') || $profile.hasClass('processing'))
+    if ($profile.hasClass('initialized'))
         return;
 
-    $profile.addClass('processing');
-
-    await Utils.waitForElement(Constants.SELECTORS.MENU.PROFILE);
-    await Utils.waitForElement(`${Constants.SELECTORS.PROFILE._} ${Constants.SELECTORS.PROFILE.TABS._}`);
+    await Utils.forElement(Constants.SELECTORS.MENU.PROFILE);
+    await Utils.forElement(`${Constants.SELECTORS.PROFILE._} ${Constants.SELECTORS.PROFILE.TABS._}`);
 
     await TabManager.initialize();
 
@@ -57,6 +55,5 @@ export const initializeProfileTab = async () => {
         $post.remove();
     });
 
-    $profile.removeClass('processing');
     $profile.addClass('initialized');
 };

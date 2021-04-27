@@ -3,27 +3,52 @@ import {Tick} from "./Tick";
 import {Constants} from "./Constants";
 
 export const Utils = {
-    initialize: () => {
+    initialize() {
         setInterval(() => dispatchEvent(Tick), Constants.INTERVAL.TIMEOUT);
     },
-    onTick: (callback) => {
-        addEventListener(Constants.INTERVAL.EVENT_NAME, callback);
+    /**
+     * @param callback {Function}
+     * @param eventName {string}
+     */
+    on(callback, eventName = Constants.INTERVAL.EVENT_NAME) {
+        addEventListener(eventName, callback);
     },
-    waitFor: async (callback, value = true) => new Promise((resolve) => {
-        const listener = () => {
-            if (callback() !== value)
-                return;
+    /**
+     * @param callback {Function}
+     * @param eventName {string}
+     */
+    off(callback, eventName = Constants.INTERVAL.EVENT_NAME) {
+        removeEventListener(eventName, callback);
+    },
+    /**
+     * @param callback {Function}
+     * @param value {*}
+     * @return {Promise<void>}
+     */
+    for(callback, value = true) {
+        return new Promise(resolve => {
+            const listener = () => {
+                if (callback() !== value)
+                    return;
 
-            resolve();
-            removeEventListener(Constants.INTERVAL.EVENT_NAME, listener);
-        };
+                resolve();
+                this.off(listener);
+            };
 
-        addEventListener(Constants.INTERVAL.EVENT_NAME, listener);
-    }),
-    waitForElement: async (selector) => {
-        await Utils.waitFor(() => $(selector).length > 0);
+            this.on(listener);
+        })
+    },
+    /**
+     * @param selector {string}
+     * @return {Promise<JQuery<HTMLElement>|jQuery|HTMLElement>}
+     */
+    async forElement(selector) {
+        await Utils.for(() => $(selector).length > 0);
         return $(selector);
     },
+    /**
+     * @return {string}
+     */
     uuid() {
         const s4 = () => Math.floor(Math.random() * 65536).toString(16).padStart(4, '0');
 
