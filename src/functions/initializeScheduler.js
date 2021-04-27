@@ -4,9 +4,9 @@ import {Constants} from "../constants/Constants";
 import {Utils} from "../constants/Utils";
 
 export const initializeScheduler = async () => {
-    const $feed = await Utils.forElement(Constants.SELECTORS.FEED._);
+    const $feed = $(Constants.SELECTORS.FEED._);
 
-    if ($feed.hasClass('initialized'))
+    if ($feed.length === 0 || $feed.hasClass('initialized'))
         return;
 
     const $createPost = $feed.find(Constants.SELECTORS.FEED.CREATE_POST._),

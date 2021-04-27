@@ -55,7 +55,9 @@ export const Constants = {
     },
     SELECTORS: {
         MENU: {
-            PROFILE: `.left-bar__dot-active + div a:contains('Profile')`
+            PROFILE: {
+                ACTIVE: `.left-bar__dot-active + div a:contains('Profile')`
+            }
         },
         PROFILE: {
             _: 'app-creator-profile-page',
@@ -88,5 +90,11 @@ export const Constants = {
                 }
             }
         }
+    },
+    TAB_MANAGER: {
+        ATTRIBUTE_NAME: {
+            TAB: 'data-tab',
+            CONTENT: 'data-tab-content'
+        },
     }
 };

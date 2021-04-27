@@ -22,13 +22,8 @@ window.addEventListener('message', (event) => {
     }
 });
 
-const initializer = async () => {
-    await Promise.all([
-        initializeScheduler(),
-        initializeProfileTab(),
-    ]);
 
-    await initializer();
-};
-
-initializer();
+Utils.on(() => [
+    initializeScheduler(),
+    initializeProfileTab()
+]);

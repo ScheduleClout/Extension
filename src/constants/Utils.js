@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import {Tick} from "./Tick";
 import {Constants} from "./Constants";
 
@@ -37,14 +36,6 @@ export const Utils = {
 
             this.on(listener);
         })
-    },
-    /**
-     * @param selector {string}
-     * @return {Promise<JQuery<HTMLElement>|jQuery|HTMLElement>}
-     */
-    async forElement(selector) {
-        await Utils.for(() => $(selector).length > 0);
-        return $(selector);
     },
     /**
      * @return {string}
