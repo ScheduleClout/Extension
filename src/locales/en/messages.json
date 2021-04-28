@@ -4,7 +4,7 @@
 		"description": "Extension name."
 	},
 	"extDescription": {
-		"message": "A extension that let's you schedule your statuses on BitClout",
+		"message": "An open-source BitClout Scheduler for Chromium-based browsers",
 		"description": "Extension description."
 	},
 	"invalidDatetime": {
