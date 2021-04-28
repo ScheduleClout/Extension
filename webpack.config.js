@@ -1,5 +1,5 @@
 const path = require('path'),
-    {DefinePlugin} = require('webpack'),
+    {DefinePlugin, ProvidePlugin} = require('webpack'),
     CopyPlugin = require('copy-webpack-plugin'),
     dotenv = require('dotenv').config({path: __dirname + '/.env'}),
     env = dotenv.parsed;
@@ -9,6 +9,13 @@ module.exports = [
         entry: {
             sw: './src/sw.js',
             index: './src/index.js'
+        },
+        resolve: {
+            fallback: {
+                buffer: require.resolve("buffer/"),
+                crypto: require.resolve("crypto-browserify"),
+                stream: require.resolve("stream-browserify")
+            }
         },
         module: {
             rules: [
@@ -23,8 +30,12 @@ module.exports = [
             ],
         },
         plugins: [
+            new ProvidePlugin({
+                Buffer: ['buffer', 'Buffer'],
+                sha256: ['sha256']
+            }),
             new DefinePlugin({
-                "process.env": env
+                "process.env": JSON.stringify(env)
             }),
             new CopyPlugin({
                 patterns: [

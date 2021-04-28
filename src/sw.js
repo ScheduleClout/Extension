@@ -1,7 +1,6 @@
 import {Scheduler} from "./constants/Scheduler";
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log({request});
     if ('type' in request) {
         let type = request.type;
         delete request.type;
@@ -17,5 +16,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-chrome.alarms.create({periodInMinutes: 0.1});
+chrome.alarms.create({periodInMinutes: parseFloat(process.env.ALARM_PERIOD_IN_MINUTES)});
 chrome.alarms.onAlarm.addListener(() => Scheduler.Publish());

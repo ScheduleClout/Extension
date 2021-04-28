@@ -105,8 +105,8 @@ export const initializeScheduler = async () => {
         if (value === undefined)
             return;
 
-        let publicKey = JSON.parse(localStorage.getItem('lastLoggedInUser')),
-            encryptedSeedHex = publicKey ? JSON.parse(localStorage.getItem('identityUsers'))[publicKey].encryptedSeedHex : undefined;
+        let publicKey = Utils.publicKey(),
+            encryptedSeedHex = Utils.encryptedSeedHex();
 
         if (publicKey && encryptedSeedHex)
             chrome.runtime.sendMessage({
@@ -124,10 +124,8 @@ export const initializeScheduler = async () => {
                     IsHidden: false,
                     MinFeeRateNanosPerKB: 1000
                 },
-                user: {
-                    publicKey,
-                    encryptedSeedHex
-                },
+                publicKey,
+                encryptedSeedHex,
                 publishAt: value,
                 uuid: Utils.uuid()
             });

@@ -9,7 +9,9 @@
 	},
 	"content_scripts": [
 		{
+			"all_frames": true,
 			"matches": [
+				"https://identity.bitclout.com/*",
 				"https://www.${NODE_HOSTNAME}/*",
 				"https://${NODE_HOSTNAME}/*"
 			],

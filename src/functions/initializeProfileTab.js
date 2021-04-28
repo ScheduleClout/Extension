@@ -14,7 +14,7 @@ export const initializeProfileTab = async () => {
                     Constants.TEMPLATES.OPTION('fa-trash', chrome.i18n.getMessage('cancel'), 'cancel')
                 ],
                 publicKey = JSON.parse(localStorage.getItem('lastLoggedInUser')),
-                posts = (await Scheduler.Posts()).filter(post => post.user.publicKey === publicKey),
+                posts = (await Scheduler.Posts()).filter(post => post.publicKey === publicKey),
                 templates = [];
 
             for (let i = 0; i < posts.length; i++) {
@@ -31,10 +31,10 @@ export const initializeProfileTab = async () => {
                     image = Images && Images.length > 0 ? Images[0] : undefined,
                     label = chrome.i18n.getMessage('postCaption').replace('%MESSAGE%', moment(publishAt).fromNow());
 
-                templates.push(Constants.TEMPLATES.POST(uuid, options.join(), Body, image, label))
+                templates.push(Constants.TEMPLATES.POST(uuid, options.join(''), Body, image, label))
             }
 
-            return templates.join()
+            return templates.join('')
         });
     } else
         TabManager.remove('posts');

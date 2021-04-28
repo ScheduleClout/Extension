@@ -1,127 +1,63 @@
-import {Constants} from "./Constants";
+import {Crypto} from "./Crypto";
 
-// @todo this file needs to be rewritten
-
-const waitForTabByUrl = async (window, url) => {
-        let callback = tab => tab.url === url || tab.pendingUrl === url;
-        await forCallback(() => window.tabs.filter(callback).length > 0);
-
-        let filter = window.tabs.filter(callback),
-            tab = filter.length > 0 ? filter[0] : undefined;
-
-        await forTab(tab);
-
-        return {tab, window};
-    },
-    forTab = async (tab) => {
-        tab = await chrome.tabs.get(tab.id);
-
-        if (tab.status !== 'complete')
-            return forTab(tab);
-
-        return true;
-    },
-    forCallback = (callback) => new Promise((resolve) => {
-        let interval = setInterval(() => {
-            if (callback()) {
-                clearInterval(interval);
-                resolve();
-            }
-        }, Constants.INTERVAL.TIMEOUT);
+const EncryptionKey = async () => new Promise(resolve => {
+        let callback = ({encryptionKey}) => resolve(encryptionKey);
+        chrome.storage.local.get(['encryptionKey'], callback);
     }),
-    createWindow = () => new Promise(resolve => {
-        let url = `https://www.${process.env.NODE_HOSTNAME}/`;
-
-        chrome.windows.create({
-            url,
-            focused: false,
-            state: 'minimized'
-        }, async (window) => {
-            console.log({window});
-            resolve(await waitForTabByUrl(window, url));
-        })
-    });
-
-export const BitClout = {
-    target: undefined,
-    async SubmitPost(post) {
+    SubmitPost = async data => {
         let response = await fetch(`https://${process.env.NODE_API_HOSTNAME}/submit-post`, {
                 method: 'POST',
                 headers: new Headers({
                     'content-type': 'application/json'
                 }),
-                body: JSON.stringify(post.data),
+                body: JSON.stringify(data),
             }),
             text = JSON.parse(await response.clone().text());
 
         return 'TransactionHex' in text ? text.TransactionHex : undefined;
     },
-    async SignTransactionHex(encryptedSeedHex, transactionHex) {
-        chrome.storage.local.set({encryptedSeedHex, transactionHex});
+    SignTransactionHex = (encryptedSeedHex, transactionHex, privateKey) => {
+        const transactionBytes = new Buffer(transactionHex, 'hex'),
+            transactionHash = new Buffer(sha256.x2(transactionBytes), 'hex'),
+            signature = privateKey.sign(transactionHash),
+            signatureBytes = new Buffer(signature.toDER()),
+            signatureLength = Crypto.uintToBuf(signatureBytes.length);
 
-        chrome.scripting.executeScript({
-            function: () => {
-                chrome.storage.local.get(['encryptedSeedHex', 'transactionHex'], function ({encryptedSeedHex, transactionHex}) {
-                    document.getElementById('identity').contentWindow.postMessage({
-                        id: {
-                            type: 'SIGN',
-                        },
-                        method: 'sign',
-                        payload: {
-                            encryptedSeedHex,
-                            transactionHex
-                        }
-                    }, '*');
-                });
+        const signedTransactionBytes = Buffer.concat([
+            // This slice is bad. We need to remove the existing signature length field prior to appending the new one.
+            // Once we have frontend transaction construction we won't need to do this.
+            transactionBytes.slice(0, -1),
+            signatureLength,
+            signatureBytes,
+        ]);
 
-                return true;
-            },
-            target: this.target
-        });
-
-        let key = `SIGNED_TRANSACTION_HEX`,
-            signedTransactionHex = undefined;
-
-        while (!signedTransactionHex) {
-            signedTransactionHex = await new Promise(resolve => {
-                chrome.storage.local.get([key], value => {
-                    if (value[key]) {
-                        resolve(value[key]);
-                        return;
-                    }
-
-                    resolve(undefined);
-                });
-            })
-        }
-
-        await new Promise(resolve => chrome.storage.local.remove(key, () => resolve()));
-
-        return signedTransactionHex;
+        return signedTransactionBytes.toString('hex');
     },
-    async SubmitTransaction(encryptedSeedHex, transactionHex) {
+    SubmitTransaction = async (encryptedSeedHex, transactionHex, privateKey) => {
         await fetch(`https://${process.env.NODE_API_HOSTNAME}/submit-transaction`, {
             method: 'POST',
             headers: new Headers({
                 'content-type': 'application/json'
             }),
             body: JSON.stringify({
-                TransactionHex: await this.SignTransactionHex(encryptedSeedHex, transactionHex)
+                TransactionHex: await SignTransactionHex(encryptedSeedHex, transactionHex, privateKey)
             }),
         })
-    },
+    };
+
+export const BitClout = {
+    /**
+     * @param post
+     * @constructor
+     */
     async Submit(post) {
-        let {tab, window} = await createWindow();
-        this.target = {tabId: tab.id};
+        const {encryptedSeedHex, data} = post,
+            [transactionHex, encryptionKey] = await Promise.all([
+                SubmitPost(data),
+                EncryptionKey()
+            ]),
+            privateKey = Crypto.encryptedSeedHexToPrivateKey(encryptedSeedHex, encryptionKey);
 
-        let encryptedSeedHex = post.user.encryptedSeedHex,
-            transactionHex = await this.SubmitPost(post);
-
-        if (!encryptedSeedHex || !transactionHex)
-            return;
-
-        await this.SubmitTransaction(encryptedSeedHex, transactionHex);
-
-        chrome.windows.remove(window.id);
+        return SubmitTransaction(encryptedSeedHex, transactionHex, privateKey);
     }
 };

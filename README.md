@@ -41,6 +41,5 @@ We assumed you are running on Google Chrome. Depending on your browser, this pro
 1. Locate the `/dist` folder inside the appropriate folder, and click on `Select` or `Open`.
 
 ## Known Issues and Possible Improvements
-1. The extension uses chrome's alarm API to handle its task; therefore, if for any reason the alarm API doesn't fire, the scheduler will not work.
-1. While posting a scheduled content, the extension opens a new browser window to sign the transaction and prevent CloudFlare's Human Verification. So, if the page fails to load, the extension cannot publish the post. Currently, the extension will not retry these cases. 
+1. The extension uses chrome's alarm API to handle its task; therefore, if for any reason the alarm API doesn't fire, the scheduler will not work. 
 1. The extension doesn't show any indicators while doing its job.
