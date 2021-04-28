@@ -34,5 +34,21 @@
 	"noContent": {
 		"message": "There is nothing to show here!",
 		"description": "No content."
+	},
+	"scheduledAlertTitle": {
+		"message": "Hooray!",
+		"description": "Scheduled Alert Title."
+	},
+	"scheduledAlertDescription": {
+		"message": "We'll publish your post when the time is right!",
+		"description": "Scheduled Alert Description."
+	},
+	"cancelledAlertTitle": {
+		"message": "Hooray!",
+		"description": "Cancelled Alert Title."
+	},
+	"cancelledAlertDescription": {
+		"message": "We've removed your post from the queue!",
+		"description": "Cancelled Alert Description."
 	}
 }

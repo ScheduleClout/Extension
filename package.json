@@ -15,7 +15,8 @@
 		"jquery": "^3.6.0",
 		"moment": "^2.29.1",
 		"sha256": "^0.2.0",
-		"stream-browserify": "^3.0.0"
+		"stream-browserify": "^3.0.0",
+		"sweetalert2": "^10.16.6"
 	},
 	"devDependencies": {
 		"copy-webpack-plugin": "^8.1.1",

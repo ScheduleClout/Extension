@@ -11,7 +11,7 @@ export const initializeProfileTab = async () => {
     if (isUserProfile) {
         TabManager.register('posts', chrome.i18n.getMessage('scheduledPosts'), async () => {
             const options = [
-                    Constants.TEMPLATES.OPTION('fa-trash', chrome.i18n.getMessage('cancel'), 'cancel')
+                    Constants.TEMPLATES.OPTION('fa-trash', chrome.i18n.getMessage('cancel'), 'remove')
                 ],
                 publicKey = JSON.parse(localStorage.getItem('lastLoggedInUser')),
                 posts = (await Scheduler.Posts()).filter(post => post.publicKey === publicKey),
@@ -38,15 +38,4 @@ export const initializeProfileTab = async () => {
         });
     } else
         TabManager.remove('posts');
-
-    let selector = '[data-action="cancel"]';
-    $(document).on('click', selector, (event) => {
-        const $target = $(event.target),
-            $element = $target.is(selector) ? $target : $target.parents(selector),
-            $post = $element.parents('[data-sid]'),
-            sid = $post.attr('data-sid');
-
-        chrome.runtime.sendMessage({type: 'REMOVE_POST', uuid: sid});
-        $post.remove();
-    });
 };

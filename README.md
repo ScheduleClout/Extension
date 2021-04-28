@@ -42,4 +42,3 @@ We assumed you are running on Google Chrome. Depending on your browser, this pro
 
 ## Known Issues and Possible Improvements
 1. The extension uses chrome's alarm API to handle its task; therefore, if for any reason the alarm API doesn't fire, the scheduler will not work. 
-1. The extension doesn't show any indicators while doing its job.
