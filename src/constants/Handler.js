@@ -22,13 +22,13 @@ export const Handler = {
                     PostHashHexToModify: "",
                     ParentStakeID: "",
                     Title: "",
-                    BodyObj: SchedulerManager.getBodyObjAndResetForm(),
                     RecloutedPostHashHex: "",
                     Sub: "",
                     CreatorBasisPoints: 0,
                     StakeMultipleBasisPoints: 12500,
                     IsHidden: false,
-                    MinFeeRateNanosPerKB: 1000
+                    MinFeeRateNanosPerKB: 1000,
+                    ...SchedulerManager.getPostContentAndResetForm()
                 },
                 publicKey,
                 encryptedSeedHex,

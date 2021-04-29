@@ -23,15 +23,19 @@ export const initializeProfileTab = async () => {
                             BodyObj: {
                                 Body,
                                 Images
+                            },
+                            PostExtraData: {
+                                EmbedVideoURL
                             }
                         },
                         uuid,
                         publishAt
                     } = posts[i],
                     image = Images && Images.length > 0 ? Images[0] : undefined,
+                    video = EmbedVideoURL && EmbedVideoURL.length > 0 ? EmbedVideoURL : undefined,
                     label = chrome.i18n.getMessage('postCaption').replace('%MESSAGE%', moment(publishAt).fromNow());
 
-                templates.push(Constants.TEMPLATES.POST(uuid, options.join(''), Body, image, label))
+                templates.push(Constants.TEMPLATES.POST(uuid, options.join(''), Body, image, video, label))
             }
 
             return templates.join('')

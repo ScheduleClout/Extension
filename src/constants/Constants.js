@@ -22,7 +22,7 @@ export const Constants = {
             <a class="dropdown-menu-item fs-12px d-block link--unstyled p-10px feed-post__dropdown-menu-item text-danger" data-action="${action}">
                 <i class="fas ${icon}" aria-hidden="true"></i> ${label}
             </a>`,
-        POST: (sid, options, text, image, label) => `
+        POST: (sid, options, text, image, video, label) => `
             <div data-sid="${sid}">
                 <div class="border-bottom border-color-grey">
                     <feed-post>
@@ -46,6 +46,7 @@ export const Constants = {
                                     ${text ? `<!--suppress CssInvalidPropertyValue, CssUnknownProperty, CssOverwrittenProperties -->
                                         <div class="roboto-regular mt-1" style="overflow-wrap: anywhere; -ms-word-break: break-all; word-break: break-all; word-break: break-word; outline: none;" tabindex="0">${text}</div>` : ''}
                                     ${image ? `<div class="feed-post__image-container"><img data-toggle="modal" class="feed-post__image" src="${image}" alt></div>` : ''}
+                                    ${video ? `<div class="feed-post__image-container"><iframe height="315" frameborder="0" allow="picture-in-picture; clipboard-write; encrypted-media; gyroscope; accelerometer;" allowfullscreen="" class="feed-post__image" src="${video}"></iframe></div>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -75,7 +76,8 @@ export const Constants = {
                 _: 'feed-create-post',
                 VALUE: 'textarea',
                 TEXTAREA: '.feed-create-post__textarea',
-                IMAGE: '.feed-post__image',
+                IMAGE: 'img.feed-post__image',
+                IFRAME: 'iframe.feed-post__image',
                 IMAGE_DELETE: '.feed-post__image-delete',
                 STATUS: {
                     _: '> div:last-child',

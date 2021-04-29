@@ -59,7 +59,7 @@ export const SchedulerManager = {
 
         this.$textarea.val(value).get(0).dispatchEvent(inputEvent);
     },
-    getBodyObjAndResetForm() {
+    getBodyObj() {
         const BodyObj = {
             Body: this.$textarea.val(),
             ImageURLs: [],
@@ -67,7 +67,7 @@ export const SchedulerManager = {
         };
 
         const $image = this.$createPost.find(Constants.SELECTORS.FEED.CREATE_POST.IMAGE),
-            $delete = this.$createPost.find(Constants.SELECTORS.FEED.CREATE_POST.IMAGE_DELETE),
+            $delete = $image.siblings(Constants.SELECTORS.FEED.CREATE_POST.IMAGE_DELETE),
             src = $image.attr('src');
 
         if (src.length > 0) {
@@ -75,10 +75,35 @@ export const SchedulerManager = {
             $delete.trigger('click');
         }
 
+        return BodyObj;
+    },
+    getPostExtraData() {
+        const PostExtraData = {
+            EmbedVideoURL: '',
+        };
+
+        const $iframe = this.$createPost.find(Constants.SELECTORS.FEED.CREATE_POST.IFRAME),
+            $delete = $iframe.siblings(Constants.SELECTORS.FEED.CREATE_POST.IMAGE_DELETE),
+            src = $iframe.attr('src');
+
+        if (src.length > 0) {
+            PostExtraData.EmbedVideoURL = src;
+            $delete.trigger('click');
+        }
+
+        return PostExtraData
+    },
+    getPostContentAndResetForm() {
+        const BodyObj = this.getBodyObj(),
+            PostExtraData = this.getPostExtraData();
+
         this.setTextareaValue(undefined);
         this.setDatetimeValue(undefined);
 
-        return BodyObj;
+        return {
+            BodyObj,
+            PostExtraData,
+        };
     }
 };
 
