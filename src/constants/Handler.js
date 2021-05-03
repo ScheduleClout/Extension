@@ -53,5 +53,9 @@ export const Handler = {
             description = chrome.i18n.getMessage('cancelledAlertDescription');
 
         Swal.fire(title, description, 'success');
+    },
+    dropdown($element) {
+        $element.toggleClass('activated');
+        $element.siblings().toggle();
     }
 };

@@ -70,7 +70,7 @@ export const SchedulerManager = {
             $delete = $image.siblings(Constants.SELECTORS.FEED.CREATE_POST.IMAGE_DELETE),
             src = $image.attr('src');
 
-        if (src.length > 0) {
+        if (src && src.length > 0) {
             BodyObj.Images.push(src);
             $delete.trigger('click');
         }
@@ -86,7 +86,7 @@ export const SchedulerManager = {
             $delete = $iframe.siblings(Constants.SELECTORS.FEED.CREATE_POST.IMAGE_DELETE),
             src = $iframe.attr('src');
 
-        if (src.length > 0) {
+        if (src && src.length > 0) {
             PostExtraData.EmbedVideoURL = src;
             $delete.trigger('click');
         }

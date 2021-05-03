@@ -35,8 +35,8 @@ export const Constants = {
                                             ${label}
                                         </span>
                                         ${options ? `<feed-post-dropdown class="ml-auto">
-                                            <div>
-                                                <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="js-feed-post__dropdown-toggle link--unstyled text-grey9">
+                                            <div style="position: relative;">
+                                                <a data-action="dropdown" role="button" class="js-feed-post__dropdown-toggle link--unstyled text-grey9">
                                                     <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right p-0">${options}</div>

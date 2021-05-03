@@ -22,6 +22,9 @@ const dataActionListener = () => {
                 case 'remove':
                     Handler.remove($element);
                     break;
+                case 'dropdown':
+                    Handler.dropdown($element);
+                    break;
             }
         });
     },
