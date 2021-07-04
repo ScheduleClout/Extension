@@ -1,5 +1,11 @@
+
 # ⏰ ScheduleClout
 ScheduleClout is a chrome extension that adds the scheduling functionality to BitClout.
+
+## Repository Archive Notice (effective July 4th, 2021)
+Thank you for helping us on this journey. As we have outgrown the Chrome Extension, we will archive this repository in favor of our new platform.
+
+You can read more on <a href="https://bitclout.com/posts/8c4cd633f8f0a93ecbf938924e7c417d8eccb819e002ccbd2e430aa6dd6fc3e5">this BitClout status</a> or visit our new web app at <a href="https://app.scheduleclout.com">app.scheduleclout.com</a>.
 
 ## Installation
 Currently, you can install the extension manually by following the **Build Guide** below; however, we are planning to publish the extension on Google Chrome Web Store.
